@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="user-form">
+      <div>
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" required />
+      </div>
+
+      <br />
+
+      <div>
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" required />
+      </div>
+
+      <br />
+
+      <div>
+        <label for="otherNames">Other Names</label>
+        <input type="text" id="otherNames" name="otherNames" />
+      </div>
+
+      <br />
+
+      <div>
+        <label for="email">Email </label>
+        <input type="email" id="email" name="email" required />
+      </div>
+
+      <br />
+
+      <div>
+        <label for="mobileNumer">Phone number </label>
+        <input
+          type="tel"
+          id="mobileNumer"
+          name="mobileNumber"
+          inputmode="tel"
+          minlength="11"
+          maxlength="11"
+          required
+        />
+      </div>
+
+      <br />
+
+      <div>
+        <label for="gender">Gender </label>
+        <select id="gender" name="gender" required>
+          <option value="">--Select--</option>
+          <option value="MALE">Male</option>
+          <option value="FEMALE">Female</option>
+        </select>
+      </div>
+
+      <br />
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      const userForm = document.getElementById("user-form");
+
+      function hasNumber(myString) {
+        return /\d/.test(myString?.trim());
+      }
+
+      function validateEmail(email) {
+        return String(email)
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          );
+      }
+
+      userForm.addEventListener("submit", async (e) => {
+        try {
+          e.preventDefault();
+          debugger;
+
+          const formData = new FormData(userForm);
+
+          const firstName = formData.get("firstName");
+          const lastName = formData.get("lastName");
+          const otherNames = formData.get("otherNames");
+          const email = formData.get("email");
+          const mobileNumber = formData.get("mobileNumber");
+          const gender = formData.get("gender");
+
+          if (firstName?.trim()?.length < 1) {
+            throw new Error("First name cannot be less than 1 character");
+          }
+
+          if (lastName?.trim()?.length < 1) {
+            throw new Error("Last name cannot be less than 1 character");
+          }
+
+          if (hasNumber(firstName)) {
+            throw new Error("First name should not contain number(s)");
+          }
+
+          if (hasNumber(lastName)) {
+            throw new Error("Last name should not contain number(s)");
+          }
+
+          if (!validateEmail(email)) {
+            throw new Error("Invalid email address");
+          }
+
+          if (mobileNumber?.trim()?.length !== 11) {
+            throw new Error("Mobile number must be 11 characters");
+          }
+
+          if (!["MALE", "FEMALE"].includes(gender)) {
+            throw new Error(
+              "Gender must be one of the following (MALE, FEMALE)"
+            );
+          }
+
+          const response = await fetch("http://localhost:4000", {
+            method: "POST",
+            body: JSON.stringify({
+              firstName,
+              lastName,
+              otherNames,
+              email,
+              mobileNumber,
+              gender,
+            }),
+          });
+
+          const data = await response.json();
+
+          console.log(data);
+
+          alert("User created successfully");
+        } catch (error) {
+          alert(error.message);
+        }
+      });
+    </script>
+  </body>
+</html>
