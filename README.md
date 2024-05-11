@@ -6,7 +6,7 @@ This is a simple HTML form project that allows users to submit their information
 
 1. Prerequisites:
 
-- Node.js and npm installed on your system (download from [URLnodejs org])
+- Node.js and npm installed on your system
 
 2. Clone the project:
    Bash
