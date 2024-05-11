@@ -9,15 +9,12 @@ This is a simple HTML form project that allows users to submit their information
 - Node.js and npm installed on your system
 
 2. Clone the project:
-   Bash
-   git clone https://your-github-repo-url.git # Replace with your actual repo URL
+   git clone https://github.com/rugue/WorkingwithForms.git
 
 3. Install dependencies: Navigate to the project directory and run:
-   Bash
    npm install
 
 4. Start the server:
-   Bash
    node server.js
 
 This will start the server on port 4000 by default. You can access the form in your browser at http://localhost:4000/.
