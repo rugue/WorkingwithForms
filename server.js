@@ -5,7 +5,7 @@ const path = require("path");
 
 // Set server hostname and port
 const hostname = "localhost";
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 // Create HTTP server
 const server = http.createServer((req, res) => {
