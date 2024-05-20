@@ -4,10 +4,10 @@ const fs = require("fs");
 const path = require("path");
 
 // Set server hostname and port
-const hostname = "0.0.0.0";
 const port = process?.env?.PORT || 4000;
-
-console.log("port", port);
+const env = process?.env?.NODE_ENV;
+const hostname = env === "PROD" ? "0.0.0.0" : "localhost";
+console.log({ port, env });
 
 // Create HTTP server
 const server = http.createServer((req, res) => {
